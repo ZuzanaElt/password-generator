@@ -113,34 +113,38 @@ function getPasswordOptions() {
         }
 
     let uppCharPrompt = confirm ("Do you want to include a capitalised letter? You must choose OK to generate safe password! ");
-
-        if (uppCharPrompt===(true) ){
-          
+        if (uppCharPrompt===(true) ){          
           console.log("Thank you for choosing to include capitalised letter")}
         else {console.log("You did not choose to include a capitalised letter, we are not able to generate safe password for you. Try again.");
         }
    
-        //plus sign in front of prompt turns the string into number
-    let passwlen = +prompt (" To choose length of your password type a number between 10-64")
-      // prints chosen number which is the chosen length:
-   console.log((passwlen))
+  //plus sign in front of prompt turns the string into number
+  // NEED TO CHECK FOR LETTER INPUT
+    let passwlen = +prompt (" To choose length of your password type a number between 10-64");
+
+    let checkLength = function(){
+          while (passwlen<10 || passwlen>64  )
+          { passwlen= +prompt("your number is not the right length, please choose length between 10 and 64");
+           }
+        }
+    checkLength(); 
+
+  // prints chosen number which is the chosen length:
+   console.log((passwlen));
       
-      //prints to console the answers array
-  
+  //prints to console the answers array
     answers=[];
     answers.push(specCharPrompt, numCharPrompt, lowCharPrompt,uppCharPrompt, passwlen);
     console.log("---------"+answers+ ", "+ "----------------");
     return (answers);
-    
 };
 
+//calling the function to get user answers
 getPasswordOptions();
+
 
 //finding if an array contains "false" and if yes then repeat prompts until all aswers are true
 //answers is an array(object)
-
-
-
 let isThereFalse = answers.find(function(choice) {
   if(choice===false){
     prompt("You have not agreed to all required options, let's try again");
@@ -148,18 +152,19 @@ let isThereFalse = answers.find(function(choice) {
     return
   }})
  
-  console.log ( answers);
+console.log ( "Collected answers are: " + answers);
 
 
- 
+// Function for getting one random element from an array
+function getRandom() {
 
-
-
-
-// Function for getting a random element from an array
-function getRandom(arr) {
-//one element from any array
+let randomisedSelection = allOptions [ Math.floor(Math.random() * allOptions.length)];
+console.log (randomisedSelection);
 }
+getRandom();
+
+
+
 
 // Function to generate password with user input
 function generatePassword() {
