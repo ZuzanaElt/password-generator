@@ -88,7 +88,7 @@ var upperCasedCharacters = [
   'Z'
 ];
 
-// creating array with all possible options to use for password
+// creating array with all possible options available to  be used for password
 var allOptions = [...specialCharacters,...numericCharacters,...lowerCasedCharacters,...upperCasedCharacters];
 //console.log(allOptions);
 
@@ -96,65 +96,41 @@ var allOptions = [...specialCharacters,...numericCharacters,...lowerCasedCharact
 // Function to prompt user for password options
 function getPasswordOptions() {
  
-    let specCharPrompt = confirm ("Do you want to include a special character? You must choose OK to generate safe password!");
-        if (specCharPrompt===(true)){ 
-        console.log("Thank you for choosing to include special character")}
-        else {console.log("You did not choose special character, we are not able to generate safe password for you. Try again.");}
+    let specCharPrompt = confirm ("Do you want to include a special character? \nYou must choose OK to generate a safe password!");
 
-    let numCharPrompt = confirm ("Do you want to include a number? You must choose OK to generate safe password! ");
-        if (numCharPrompt ===(true)){
-          console.log("Thank you for choosing to include number")}
-        else {console.log("You did not choose to include a number, we are not able to generate safe password for you. Try again."); }
+    let numCharPrompt = confirm ("Do you want to include a number? \nYou MUST choose 'OK' to generate a safe password! ");
+       
 
-    let lowCharPrompt = confirm ("Do yoconfirm to include a lower case letters? You must choose OK to generate safe password! ");
-        if (lowCharPrompt ===(true)){
-          console.log("Thank you for choosing to include lower case letter.")}
-        else {console.log("You did not choose to include lower case letter, we are not able to generate safe password for you. Try again.");
-        }
-
-    let uppCharPrompt = confirm ("Do you want to include a capitalised letter? You must choose OK to generate safe password! ");
-        if (uppCharPrompt===(true) ){          
-          console.log("Thank you for choosing to include capitalised letter")}
-        else {console.log("You did not choose to include a capitalised letter, we are not able to generate safe password for you. Try again.");
-        }
+    let lowCharPrompt = confirm ("Do you want to include a lower-case letter? You MUST choose 'OK' to generate a safe password! ");
+       
+    let uppCharPrompt = confirm ("Do you want to include a capitalised letter? \nYou MUST choose 'OK' to generate a safe password! ");
+  
    
-  //plus sign in front of prompt turns the string into number
-  // NEED TO CHECK FOR LETTER INPUT
+   //plus sign in front of prompt turns the string into number
     let passwlen = +prompt (" To choose length of your password type a number between 10-64");
-//removed to test retur,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
-  /*  let checkLength = function(){
-          while (passwlen<10 || passwlen>64  )
-          { passwlen= +prompt("your number is not the right length, please choose length between 10 and 64");
-           }
-        }
-    checkLength(); */
-//end of removed,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
-  // prints chosen number which is the chosen length:
-   console.log((passwlen));
-      
-  //prints to console the answers array
+
+    let checkLength = function(){
+         while (passwlen<10 || passwlen>64 )
+            { passwlen= +prompt("Your chosen number is not the right length, please choose length between 10 and 64");
+            }
+    }
+    checkLength(); 
     answers=[];
     answers.push(specCharPrompt, numCharPrompt, lowCharPrompt,uppCharPrompt, passwlen);
-    console.log("---------"+answers+ ", "+ "----------------");
     return (answers);
 };
 
-//calling the function to get user answers
 getPasswordOptions();
 
-
-//finding if an array contains "false" and if yes then repeat prompts until all aswers are true
-//answers is an array(object)
+//finding if the array 'answers' contains 'false' and if yes then repeat the function(confirmations) until all answers are 'true'
 let isThereFalse = answers.find(function(choice) {
   if(choice===false){
-    prompt("You have not agreed to all required options, let's try again");
+    confirm("You have not agreed to all required options, let's try again");
     getPasswordOptions()
     return
   }})
-console.log ( "Collected users answers are: " + answers);
 
-
-// Function for getting .chosen-length random elements from an array
+// Function for getting .chosen-length number of random elements from the 'allOptions' array
 let randomisedSelection=0;
 
 function getRandom() {
@@ -164,16 +140,14 @@ function getRandom() {
   return randomisedSelection
 };
 getRandom();
-console.log ( "this is a string of random generated elements: " + randomisedSelection )
 
-//inputing randomized string into array
+
+//inputing the randomized string into new array
 const randomisedArray=Array.from(randomisedSelection);
-console.log (randomisedArray);
 
-//--------------------------------------------------------------------------------------------
+
 //checking if string includes all required options
 //using code from https://www.geeksforgeeks.org/how-to-find-if-two-arrays-contain-any-common-item-in-javascript/
-
 function findCommon(par1,par2){
    return par1.some(item => par2.includes(item))
 };
@@ -183,44 +157,37 @@ let numerTrue=(findCommon(randomisedArray, numericCharacters));
 let lowCaseTrue=(findCommon(randomisedArray, lowerCasedCharacters));
 let uppCaseTrue=(findCommon(randomisedArray, upperCasedCharacters));
 
-console.log(specialTrue, numerTrue, lowCaseTrue, uppCaseTrue);
-
+// to view the randomised string in console:
+//console.log(randomisedSelection)
 
 if (specialTrue && numerTrue && lowCaseTrue && uppCaseTrue){
-  console.log("All options are present in the string");
+  console.log("All required options are present in the string");
 }
 else {
-  console.log("Option/s are missing. we Need to run another randomisation");
+  console.log("Option/s are missing. We need to run another randomisation");
   getRandom();
  }
 
+ confirm ( "Here is your random generated password: " + randomisedSelection +". To display it in html window press the 'Generate Password' button. " );
 
-
-
-
-
-//===========================================================================================
 // Function to generate password with user input
 function generatePassword() {
-
-let password="xfgdgsgyz"
-return password;
-
+return randomisedSelection;
 }
 
 
 //code below is already prepared
-                      // Get references to the #generate element
-                      var generateBtn = document.querySelector('#generate');
+      // Get references to the #generate element
+       var generateBtn = document.querySelector('#generate');
 
-                      // Write password to the #password input
-                      function writePassword() {
-                        var password = generatePassword();
-                        var passwordText = document.querySelector('#password');
+      // Write password to the #password input
+      function writePassword() {
+      var password = generatePassword();
+      var passwordText = document.querySelector('#password');
 
-                        passwordText.value = password;
-                      }
+      passwordText.value = password;
+      }
 
-                      // Add event listener to generate button
-                      generateBtn.addEventListener('click', writePassword);
+     // Add event listener to generate button
+      generateBtn.addEventListener('click', writePassword);
 //code above is already prepared

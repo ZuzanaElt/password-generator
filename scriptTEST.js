@@ -88,7 +88,7 @@ var upperCasedCharacters = [
   'Z'
 ];
 
-// creating array with all possible options to use for password
+// creating array with all possible options available to  be used for password
 var allOptions = [...specialCharacters,...numericCharacters,...lowerCasedCharacters,...upperCasedCharacters];
 //console.log(allOptions);
 
@@ -97,91 +97,106 @@ var allOptions = [...specialCharacters,...numericCharacters,...lowerCasedCharact
 function getPasswordOptions() {
  
     let specCharPrompt = confirm ("Do you want to include a special character? You must choose OK to generate safe password!");
-       
+        if (specCharPrompt===(true)){ 
+        console.log("Thank you for choosing to include special character")}
+        else {console.log("You did not choose special character, we are not able to generate safe password for you. Try again.");}
+
     let numCharPrompt = confirm ("Do you want to include a number? You must choose OK to generate safe password! ");
-       
+        if (numCharPrompt ===(true)){
+          console.log("Thank you for choosing to include number")}
+        else {console.log("You did not choose to include a number, we are not able to generate safe password for you. Try again."); }
+
     let lowCharPrompt = confirm ("Do yoconfirm to include a lower case letters? You must choose OK to generate safe password! ");
-      
+        if (lowCharPrompt ===(true)){
+          console.log("Thank you for choosing to include lower case letter.")}
+        else {console.log("You did not choose to include lower case letter, we are not able to generate safe password for you. Try again.");
+        }
+
     let uppCharPrompt = confirm ("Do you want to include a capitalised letter? You must choose OK to generate safe password! ");
-       
+        if (uppCharPrompt===(true) ){          
+          console.log("Thank you for choosing to include capitalised letter")}
+        else {console.log("You did not choose to include a capitalised letter, we are not able to generate safe password for you. Try again.");
+        }
+   
+  //plus sign in front of prompt turns the string into number
+  // NEED TO CHECK FOR LETTER INPUT
     let passwlen = +prompt (" To choose length of your password type a number between 10-64");
+//removed to test retur,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
     let checkLength = function(){
           while (passwlen<10 || passwlen>64  )
           { passwlen= +prompt("your number is not the right length, please choose length between 10 and 64");
            }
         }
     checkLength(); 
+//end of removed,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+  // prints chosen number which is the chosen length:
+   console.log((passwlen));
+      
+  //prints to console the answers array
     answers=[];
     answers.push(specCharPrompt, numCharPrompt, lowCharPrompt,uppCharPrompt, passwlen);
+    console.log("---------"+answers+ ", "+ "----------------");
     return (answers);
 };
+
+//calling the function to get user answers
 getPasswordOptions();
 
 
-//finding if an array contains "false" and if yes then repeat prompts until all aswers are true
+//finding if an array contains "false" and if yes then repeat prompts until all answers are true
 //answers is an array(object)
 let isThereFalse = answers.find(function(choice) {
   if(choice===false){
-    prompt("You have not agreed to all required options, let's try again");
-    getPasswordOptions();
+    confirm("You have not agreed to all required options, let's try again");
+    getPasswordOptions()
     return
   }})
- 
+console.log ( "Collected users answers are: " + answers);
 
 
 // Function for getting .chosen-length random elements from an array
 let randomisedSelection=0;
+
 function getRandom() {
   for (i=0; i<answers[4]; i++){
   randomisedSelection += allOptions [ Math.floor(Math.random() * allOptions.length)];
   }   
+  return randomisedSelection
 };
 getRandom();
 console.log ( "this is a string of random generated elements: " + randomisedSelection )
 
-//inputting randomized string into array
+//inputing randomized string into array
 const randomisedArray=Array.from(randomisedSelection);
 console.log (randomisedArray);
 
 //--------------------------------------------------------------------------------------------
 //checking if string includes all required options
-//I have 2 arrays randomisedArray and specialCharacters
 //using code from https://www.geeksforgeeks.org/how-to-find-if-two-arrays-contain-any-common-item-in-javascript/
 
-function findCommon(randomisedArray,specialCharacters){
-   return randomisedArray.some(item => specialCharacters.includes(item))
+function findCommon(par1,par2){
+   return par1.some(item => par2.includes(item))
 };
-function findCommon(randomisedArray, numericCharacters){
-  return randomisedArray.some(item => numericCharacters.includes(item))
-   
-};
-function findCommon(randomisedArray,lowerCasedCharacters){
-  return randomisedArray.some(item => lowerCasedCharacters.includes(item))
-};
-function findCommon(randomisedArray,upperCasedCharacters){
-  return randomisedArray.some(item => upperCasedCharacters.includes(item))
-};
-/*
-console.log(findCommon(randomisedArray, specialCharacters));
-console.log(findCommon(randomisedArray, numericCharacters));
-console.log(findCommon(randomisedArray, lowerCasedCharacters));
-console.log(findCommon(randomisedArray, upperCasedCharacters));
-*/
+
 let specialTrue=(findCommon(randomisedArray, specialCharacters));
 let numerTrue=(findCommon(randomisedArray, numericCharacters));
 let lowCaseTrue=(findCommon(randomisedArray, lowerCasedCharacters));
 let uppCaseTrue=(findCommon(randomisedArray, upperCasedCharacters));
-console.log(specialTrue);
-console.log(numerTrue);
-console.log(lowCaseTrue);
-console.log(uppCaseTrue);
 
-if (specialTrue=numerTrue=lowCaseTrue=uppCaseTrue){
-  console.log("aoighieotyeoiatyoiaygaioguipadjgaepirgjpeagjpeagutep");
-} else {
-  console.log("oAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAutep");
+console.log(specialTrue, numerTrue, lowCaseTrue, uppCaseTrue);
+
+
+if (specialTrue && numerTrue && lowCaseTrue && uppCaseTrue){
+  console.log("All required options are present in the string");
 }
-getRandom();
+else {
+  console.log("Option/s are missing. we need to run another randomisation");
+  getRandom();
+  
+ }
+
+
+
 
 
 
