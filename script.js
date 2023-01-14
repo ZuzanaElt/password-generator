@@ -155,16 +155,15 @@ let isThereFalse = answers.find(function(choice) {
 console.log ( "Collected answers are: " + answers);
 
 
-// Function for getting one random element from an array
+// Function for getting .chosen-length random elements from an array
+let randomisedSelection=0;
 function getRandom() {
-
-let randomisedSelection = allOptions [ Math.floor(Math.random() * allOptions.length)];
-console.log (randomisedSelection);
-}
+  for (i=0; i<answers[4]; i++){
+  randomisedSelection += allOptions [ Math.floor(Math.random() * allOptions.length)];
+  }   
+};
 getRandom();
-
-
-
+console.log ( "this is a string of random generated emelements: " + randomisedSelection )
 
 // Function to generate password with user input
 function generatePassword() {
