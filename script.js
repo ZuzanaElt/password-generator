@@ -104,12 +104,11 @@ function getPasswordOptions() {
 
     //checking if number is the right length and if only integers are included in the string
     let checkLength = function(){
-         while ((passwlen<3 || passwlen>64 ) || passwlen.match (/[^0-9]/)) 
+         while ((passwlen<10 || passwlen>64 ) || passwlen.match (/[^0-9]/)) 
             { passwlen= prompt("Your chosen number is not acceptable, please choose only numerals and length between 10 and 64");
             }
     }
     checkLength(); 
-
     answers=[];
     answers.push(specCharPrompt, numCharPrompt, lowCharPrompt,uppCharPrompt, passwlen);
     
@@ -117,9 +116,9 @@ function getPasswordOptions() {
     let isThereFalse = answers.find(function(choice) {
     if(choice===false){
       confirm("You have not agreed to all required options, let's try again");
-      getPasswordOptions()
+      getPasswordOptions();
       return
-    }})
+    }});
   return(answers)
 };
 
