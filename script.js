@@ -118,18 +118,20 @@ function getPasswordOptions() {
 
     answers=[];
     answers.push(specCharPrompt, numCharPrompt, lowCharPrompt,uppCharPrompt, passwlen);
-    return (answers);
-};
-
-getPasswordOptions();
-
-//finding if the array 'answers' contains 'false' and if yes then repeat the function(confirmations) until all answers are 'true'
-let isThereFalse = answers.find(function(choice) {
+    
+    //finding if the array 'answers' contains 'false' and if yes then repeat the function(confirmations) until all answers are 'true'
+  let isThereFalse = answers.find(function(choice) {
   if(choice===false){
     confirm("You have not agreed to all required options, let's try again");
     getPasswordOptions()
     return
   }})
+  return(answers)
+};
+
+getPasswordOptions();
+
+
 
 // Function for getting .chosen-length number of random elements from the 'allOptions' array
 let randomisedSelection="";

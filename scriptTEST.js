@@ -106,7 +106,7 @@ function getPasswordOptions() {
           console.log("Thank you for choosing to include number")}
         else {console.log("You did not choose to include a number, we are not able to generate safe password for you. Try again."); }
 
-    let lowCharPrompt = confirm ("Do yoconfirm to include a lower case letters? You must choose OK to generate safe password! ");
+    let lowCharPrompt = confirm ("Do you confirm to include a lower case letters? You must choose OK to generate safe password! ");
         if (lowCharPrompt ===(true)){
           console.log("Thank you for choosing to include lower case letter.")}
         else {console.log("You did not choose to include lower case letter, we are not able to generate safe password for you. Try again.");
@@ -136,7 +136,17 @@ function getPasswordOptions() {
     answers=[];
     answers.push(specCharPrompt, numCharPrompt, lowCharPrompt,uppCharPrompt, passwlen);
     console.log("---------"+answers+ ", "+ "----------------");
-    return (answers);
+    ;
+
+    let isThereFalse = answers.find(function(choice) {
+      while(choice===false){
+        answers.length=0;
+        confirm("You have not agreed to all required options, let's try again");
+        
+        getPasswordOptions()
+        return
+      }})
+      return(answers)
 };
 
 //calling the function to get user answers
@@ -145,17 +155,12 @@ getPasswordOptions();
 
 //finding if an array contains "false" and if yes then repeat prompts until all answers are true
 //answers is an array(object)
-let isThereFalse = answers.find(function(choice) {
-  if(choice===false){
-    confirm("You have not agreed to all required options, let's try again");
-    getPasswordOptions()
-    return
-  }})
-console.log ( "Collected users answers are: " + answers);
+
+console.log ( "Collected users Answers are: " + answers);
 
 
 // Function for getting .chosen-length random elements from an array
-let randomisedSelection=0;
+let randomisedSelection="";
 
 function getRandom() {
   for (i=0; i<answers[4]; i++){
@@ -183,7 +188,7 @@ let numerTrue=(findCommon(randomisedArray, numericCharacters));
 let lowCaseTrue=(findCommon(randomisedArray, lowerCasedCharacters));
 let uppCaseTrue=(findCommon(randomisedArray, upperCasedCharacters));
 
-console.log(specialTrue, numerTrue, lowCaseTrue, uppCaseTrue);
+console.log(" is character present  " +specialTrue, numerTrue, lowCaseTrue, uppCaseTrue);
 
 
 if (specialTrue && numerTrue && lowCaseTrue && uppCaseTrue){
