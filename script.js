@@ -110,19 +110,12 @@ function getPasswordOptions() {
     let passwlen = prompt (" To choose length of your password type a number between 10-64");
 
     let checkLength = function(){
-         while (passwlen<10 || passwlen>64 )
-            { passwlen= prompt("Your chosen number is not the right length, please choose length between 10 and 64");
+         while ((passwlen<10 || passwlen>64 ) || passwlen.match (/[^0-9]/))
+            { passwlen= prompt("Your chosen number is not acceptable, please choose only numerals and length between 10 and 64");
             }
     }
     checkLength(); 
-// console.log ( typeof passwlen)
-    let checkLetters =function(){
-          while (passwlen % 1){ 
-            passwlen= prompt("Your chosen input is not the right type, please choose length between 10 and 64");
-        }
-    }
 
-    checkLetters();
     answers=[];
     answers.push(specCharPrompt, numCharPrompt, lowCharPrompt,uppCharPrompt, passwlen);
     return (answers);
@@ -139,17 +132,18 @@ let isThereFalse = answers.find(function(choice) {
   }})
 
 // Function for getting .chosen-length number of random elements from the 'allOptions' array
-let randomisedSelection;
+let randomisedSelection="";
 
 function getRandom() {
   for (i=0; i<answers[4]; i++){
-  randomisedSelection += allOptions [ Math.floor(Math.random() * allOptions.length)];
+  randomisedSelection += allOptions [ Math.floor(Math.random() * allOptions.length)]
+  
   }   
   return randomisedSelection
 };
 getRandom();
 
-
+console.log(randomisedSelection);
 //inputing the randomized string into new array
 const randomisedArray=Array.from(randomisedSelection);
 
@@ -165,15 +159,14 @@ let numerTrue=(findCommon(randomisedArray, numericCharacters));
 let lowCaseTrue=(findCommon(randomisedArray, lowerCasedCharacters));
 let uppCaseTrue=(findCommon(randomisedArray, upperCasedCharacters));
 
-// to view the randomised string in console:
-//console.log(randomisedSelection)
+// to view the randomised string in console: console.log(randomisedSelection)
 
 if (specialTrue && numerTrue && lowCaseTrue && uppCaseTrue){
   console.log("All required options are present in the string");
 }
 else {
-  console.log("Option/s are missing. We need to run another randomisation");
-  getRandom();
+  console.log("Option/s are missing. We need to run another randomisation. Please, refresh your page.");
+  ;
  }
 
  confirm ( "Here is your random generated password: " + randomisedSelection +". To display it in html window press the 'Generate Password' button. " );
@@ -198,4 +191,4 @@ return randomisedSelection;
 
      // Add event listener to generate button
       generateBtn.addEventListener('click', writePassword);
-//code above is already prepared
+    //code above is already prepared
