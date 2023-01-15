@@ -107,14 +107,22 @@ function getPasswordOptions() {
   
    
    //plus sign in front of prompt turns the string into number
-    let passwlen = +prompt (" To choose length of your password type a number between 10-64");
+    let passwlen = prompt (" To choose length of your password type a number between 10-64");
 
     let checkLength = function(){
          while (passwlen<10 || passwlen>64 )
-            { passwlen= +prompt("Your chosen number is not the right length, please choose length between 10 and 64");
+            { passwlen= prompt("Your chosen number is not the right length, please choose length between 10 and 64");
             }
     }
     checkLength(); 
+// console.log ( typeof passwlen)
+    let checkLetters =function(){
+          while (passwlen % 1){ 
+            passwlen= prompt("Your chosen input is not the right type, please choose length between 10 and 64");
+        }
+    }
+
+    checkLetters();
     answers=[];
     answers.push(specCharPrompt, numCharPrompt, lowCharPrompt,uppCharPrompt, passwlen);
     return (answers);
@@ -131,7 +139,7 @@ let isThereFalse = answers.find(function(choice) {
   }})
 
 // Function for getting .chosen-length number of random elements from the 'allOptions' array
-let randomisedSelection=0;
+let randomisedSelection;
 
 function getRandom() {
   for (i=0; i<answers[4]; i++){
